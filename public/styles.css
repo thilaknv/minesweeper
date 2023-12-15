@@ -1,0 +1,193 @@
+:root {
+    --background-color1: #303030;
+    --background-color2: #202020;
+    --background-color3: #b4b4b4;
+    --border-color: #ffffff2f;
+    --square-length: 10vh;
+    --color1: #ffffff8f;
+    --color2: #0000008f;
+
+    --board-height: 80vh;
+    --board-width: 80vh;
+    --board-box-length: 10vh;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    color: var(--color1);
+    font-family: monospace;
+}
+
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color1);
+}
+
+button {
+    cursor: pointer;
+}
+
+#inputForm {
+    font-size: large;
+    display: flex;
+    height: 30vh;
+    min-height: 150px;
+    width: 80vw;
+    max-width: 300px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    justify-content: space-evenly;
+    padding: 20px;
+    background-color: var(--background-color2);
+}
+
+.inp-div-form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.lab-inp {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+#xLength,
+#yLength {
+    border: none;
+    width: auto;
+    border-bottom: 2px solid var(--border-color);
+    /* border-top: 2px solid var(--border-color); */
+    border-radius: 5px;
+    font-size: x-large;
+    font-weight: bolder;
+    background-color: transparent;
+    color: var(--color1);
+    text-align: center;
+    outline: none;
+}
+
+.numInDiv {
+    height: 7vh;
+    border-radius: 3.5vh;
+    /* background-color: var(--background-color1); */
+    padding: 0px 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inc-button,
+.dec-button {
+    background-color: transparent;
+    color: var(--color1);
+    border-radius: 3.5vh;
+    font-size: xx-large;
+    font-weight: bolder;
+    padding: 0px;
+    border: none;
+}
+
+.inc-button:active,
+.inc-button:hover {
+    color: #00a800;
+}
+
+.dec-button:active,
+.dec-button:hover {
+    color: #ff0000;
+}
+
+#startButton {
+    background-color: var(--background-color1);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: large;
+}
+
+#startButton:active {
+    background-color: var(--background-color2);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    display: none;
+}
+
+#board {
+    height: var(--board-height);
+    width: var(--board-width);
+    background-color: var(--background-color3);
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.subBox {
+    height: var(--board-box-length);
+    width: var(--board-box-length);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+
+/* .bomb {
+    background-image: url("./images/bomb.png");
+}
+
+.one {
+    background-image: url("./images/one.png");
+}
+
+.two {
+    background-image: url("./images/two.png");
+}
+
+.three {
+    background-image: url("./images/three.png");
+}
+
+.four {
+    background-image: url("./images/four.png");
+}
+
+.five {
+    background-image: url("./images/five.png");
+}
+
+.six {
+    background-image: url("./images/six.png");
+}
+
+.seven {
+    background-image: url("./images/seven.png");
+}
+
+.eight {
+    background-image: url("./images/eight.png");
+} */
+
+.hide {
+    display: none;
+}
+
+/* @media(max-width : 80vh) {
+    :root {
+        --board-length: 100vw;
+    }
+} */

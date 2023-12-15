@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mines</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <form action="/get" id="inputForm">
+
+        <div class="inp-div-form">
+            <div class="lab-inp">
+                <label for="yLength">ROW</label>
+                <div class="numInDiv">
+                    <button id="decr2" class="dec-button">&minus;</button>
+                    <input type="number" name="yLength" id="yLength" value="8" min="4" max="20">
+                    <button id="incr2" class="inc-button">&plus;</button>
+                </div>
+            </div>
+            &times;
+            <div class="lab-inp">
+                <label for="xLength">COL</label>
+                <div class="numInDiv">
+                    <button id="decr1" class="dec-button">&minus;</button>
+                    <input type="number" name="xLength" id="xLength" value="8" min="4" max="20">
+                    <button id="incr1" class="inc-button">&plus;</button>
+                </div>
+            </div>
+        </div>
+        <button id="startButton">START</button>
+    </form>
+    <div id="board" class="hide">
+
+    </div>
+</body>
+<script type="module" src="app.js"></script>
+
+</html>
