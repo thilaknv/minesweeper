@@ -1,6 +1,7 @@
 import { BOARD } from "../app.js";
 
 const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+const Alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'bomb'];
 const countData = {
     total: null,
@@ -103,7 +104,7 @@ function createBoard() {
     setDimentions(x, y);
     for (let i = 0; i < y; i++) {
         for (let j = 0; j < x; j++) {
-            let id = `${alpha[i]}${j}`;
+            let id = `${alpha[i]}${Alpha[j]}`;
             let newBox = document.createElement("div");
             newBox.classList.add("subBox");
             newBox.classList.add("cover");
@@ -123,7 +124,7 @@ function endGame(result) {
 }
 
 function release(row, col) {
-    const tempBox = document.getElementById(`${alpha[row]}${col}`);
+    const tempBox = document.getElementById(`${alpha[row]}${Alpha[col]}`);
     tempBox.style.backgroundImage = `url("./images/${numbers[gameState[row][col]]}.png")`;
     tempBox.classList.remove('cover');
     gameState[row][col] = -1;
@@ -159,12 +160,11 @@ function addEventsToBoard(x, y) {
     BOARD.addEventListener('click', (event) => {
         const id = event.target.id;
         const row = id.charCodeAt(0) - 97;
-        const col = Number(id[1]);
+        const col = id.charCodeAt(1) - 65;
         if (gameState.length == 0) {
             createArray(x, y, row, col);
             calculate(x, y);
             releaseRecursion(row, col, x, y);
-
             return;
         }
 
@@ -180,8 +180,8 @@ function addEventsToBoard(x, y) {
     });
     addEventsToResult();
 }
-function addEventsToResult(){
-    document.querySelector("#restart").addEventListener('click', (event)=>{
+function addEventsToResult() {
+    document.querySelector("#restart").addEventListener('click', (event) => {
         location.reload();
     });
 }
