@@ -117,7 +117,8 @@ function createBoard() {
 function endGame(result) {
     const span = document.querySelector("#result span");
     span.innerText = `You ${result}`;
-    document.querySelector("#board").style.display = 'none';
+    document.querySelector("#board").style.zIndex = '-1';
+    document.querySelector("#board").style.filter = 'blur(2px)';
     document.querySelector("#result").style.display = 'flex';
 }
 

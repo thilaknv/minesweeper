@@ -26,6 +26,7 @@
 
 
 body {
+    position: relative;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -38,6 +39,7 @@ button {
 }
 
 #inputForm {
+    position: absolute;
     font-size: large;
     display: flex;
     height: 30vh;
@@ -52,6 +54,7 @@ button {
     justify-content: space-evenly;
     padding: 20px;
     background-color: var(--background-color2);
+    transition: 200ms;
 }
 
 .inp-div-form {
@@ -136,11 +139,13 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #board {
+    position: absolute;
     height: var(--board-height);
     width: var(--board-width);
     background-color: var(--background-color4);
     flex-direction: row;
     flex-wrap: wrap;
+    transition: 200ms;
 }
 
 
@@ -164,6 +169,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #result {
+    position: absolute;
     font-size: large;
     height: 30vh;
     min-height: 150px;
@@ -177,6 +183,7 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: space-evenly;
     padding: 20px;
     background-color: var(--background-color2);
+    transition: 200ms;
 }
 
 #result span {
