@@ -10,7 +10,6 @@
 
 <body>
     <form action="/get" id="inputForm">
-
         <div class="inp-div-form">
             <div class="lab-inp">
                 <label for="yLength">ROW</label>
@@ -32,8 +31,10 @@
         </div>
         <button id="startButton">START</button>
     </form>
-    <div id="board" class="hide">
-
+    <div id="board" class="hide"></div>
+    <div id="result" class="hide">
+        <span>You Won</span>
+        <button id="restart">Play Again</button>
     </div>
 </body>
 <script type="module" src="app.js"></script>

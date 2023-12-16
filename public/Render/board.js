@@ -2,7 +2,11 @@ import { BOARD } from "../app.js";
 
 const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'bomb'];
-
+const countData = {
+    total: null,
+    bombs: null,
+    seen: null
+}
 const gameState = [];
 
 function setDimentions(x, y) {
@@ -18,40 +22,45 @@ function getRandom_0toN(n) {
     return Math.floor(Math.random() * n);
 }
 
-function bombForEachX(bombs, x, y) {
+function bombForEachX(bombs, x, y, no_row, no_col) {
     let j = 0, sign = 1;
     if (getRandom_0toN(2)) {
         j = x - 1; sign = -1;
     }
-    for (let index = 0; j < x && j > -1 && bombs; j += sign) {
-        index = getRandom_0toN(y);
-        if (gameState[index][j] == 9) continue;
-        gameState[index][j] = 9;
+    for (let i = 0; j < x && j > -1 && bombs; j += sign) {
+        i = getRandom_0toN(y);
+        if (gameState[i][j] == 9) continue;
+        if (Math.abs(i - no_row) < 2 && Math.abs(j - no_col) < 2) continue;
+        gameState[i][j] = 9;
         bombs--;
     }
     return bombs;
 }
 
-function bombForEachY(bombs, x, y) {
+function bombForEachY(bombs, x, y, no_row, no_col) {
     let i = 0, sign = 1;
     if (getRandom_0toN(2)) {
         i = y - 1; sign = -1;
     }
-    for (let index = 0; i < y && i > -1 && bombs; i += sign) {
-        index = getRandom_0toN(x);
-        if (gameState[i][index] == 9) continue;
-        gameState[i][index] = 9;
+    for (let j = 0; i < y && i > -1 && bombs; i += sign) {
+        j = getRandom_0toN(x);
+        if (gameState[i][j] == 9) continue;
+        if (Math.abs(i - no_row) < 2 && Math.abs(j - no_col) < 2) continue;
+        gameState[i][j] = 9;
         bombs--;
     }
     return bombs;
 }
 
-function createArray(x, y) {
+function createArray(x, y, no_row, no_col) {
     let bombs = x * y;
     if (bombs == 16) bombs = 1;
     else if (bombs == 20) bombs = 2;
     else
         bombs = Math.ceil(0.13 * bombs);
+
+    countData.bombs = bombs;
+
     for (let i = 0; i < y; i++) {
         gameState[i] = [];
         for (let j = 0; j < x; j++) {
@@ -59,10 +68,10 @@ function createArray(x, y) {
         }
     }
     if (x < y) {
-        while (bombs = bombForEachY(bombForEachX(bombs, x, y), x, y));
+        while (bombs = bombForEachY(bombForEachX(bombs, x, y, no_row, no_col), x, y, no_row, no_col));
     }
     else {
-        while (bombs = bombForEachX(bombForEachY(bombs, x, y), x, y));
+        while (bombs = bombForEachX(bombForEachY(bombs, x, y, no_row, no_col), x, y, no_row, no_col));
     }
 }
 
@@ -75,7 +84,7 @@ function calculate(x, y) {
                     if (j > 0) gameState[i - 1][j - 1] != 9 && (gameState[i - 1][j - 1]++);
                     gameState[i - 1][j] != 9 && (gameState[i - 1][j]++);
                 }
-                if (i < x - 1) {
+                if (i < y - 1) {
                     if (j < x - 1) gameState[i + 1][j + 1] != 9 && (gameState[i + 1][j + 1]++);
                     if (j > 0) gameState[i + 1][j - 1] != 9 && (gameState[i + 1][j - 1]++);
                     gameState[i + 1][j] != 9 && (gameState[i + 1][j]++);
@@ -90,21 +99,92 @@ function calculate(x, y) {
 function createBoard() {
     const x = document.querySelector("#xLength").value;
     const y = document.querySelector("#yLength").value;
-    const unit = setDimentions(x, y);
-    createArray(x, y);
-    calculate(x, y);
-    console.log(gameState);
+    countData.total = x * y;
+    setDimentions(x, y);
     for (let i = 0; i < y; i++) {
         for (let j = 0; j < x; j++) {
             let id = `${alpha[i]}${j}`;
             let newBox = document.createElement("div");
             newBox.classList.add("subBox");
+            newBox.classList.add("cover");
             newBox.setAttribute("id", id);
-            newBox.style.backgroundImage = `url("./images/${numbers[gameState[i][j]]}.png")`;
             BOARD.appendChild(newBox);
         }
     }
+    addEventsToBoard(x, y);
 }
+
+function endGame(result) {
+    const span = document.querySelector("#result span");
+    span.innerText = `You ${result}`;
+    document.querySelector("#board").style.display = 'none';
+    document.querySelector("#result").style.display = 'flex';
+}
+
+function release(row, col) {
+    const tempBox = document.getElementById(`${alpha[row]}${col}`);
+    tempBox.style.backgroundImage = `url("./images/${numbers[gameState[row][col]]}.png")`;
+    tempBox.classList.remove('cover');
+    gameState[row][col] = -1;
+    if (countData.total == countData.bombs) {
+        endGame("Won");
+    }
+}
+
+function releaseRecursion(i, j, x, y) {
+    if (gameState[i][j] < 0 || gameState[i][j] > 8) return;
+    countData.total--;
+    if (gameState[i][j] != 0) {
+        release(i, j);
+        return;
+    }
+    release(i, j);
+
+    if (i > 0) {
+        if (j < x - 1) releaseRecursion(i - 1, j + 1, x, y);
+        if (j > 0) releaseRecursion(i - 1, j - 1, x, y);
+        releaseRecursion(i - 1, j, x, y);
+    }
+    if (i < y - 1) {
+        if (j < x - 1) releaseRecursion(i + 1, j + 1, x, y);
+        if (j > 0) releaseRecursion(i + 1, j - 1, x, y);
+        releaseRecursion(i + 1, j, x, y);
+    }
+    if (j > 0) releaseRecursion(i, j - 1, x, y);
+    if (j < x - 1) releaseRecursion(i, j + 1, x, y);
+}
+
+function addEventsToBoard(x, y) {
+    BOARD.addEventListener('click', (event) => {
+        const id = event.target.id;
+        const row = id.charCodeAt(0) - 97;
+        const col = Number(id[1]);
+        if (gameState.length == 0) {
+            createArray(x, y, row, col);
+            calculate(x, y);
+            releaseRecursion(row, col, x, y);
+
+            return;
+        }
+
+        if (gameState[row][col] < 0 || gameState[row][col] > 9) return;
+
+        if (gameState[row][col] == 9) {
+            release(row, col)
+            endGame("Lost");
+            return;
+        }
+
+        releaseRecursion(row, col, x, y);
+    });
+    addEventsToResult();
+}
+function addEventsToResult(){
+    document.querySelector("#restart").addEventListener('click', (event)=>{
+        location.reload();
+    });
+}
+
 export {
     createBoard
 }
