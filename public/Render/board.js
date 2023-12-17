@@ -12,7 +12,7 @@ const gameState = [];
 
 function setDimentions(x, y) {
     const root = document.querySelector(":root");
-    const unit = Math.min(Math.floor(0.9 * root.offsetHeight / y), Math.floor(0.9 * root.offsetWidth / x));
+    const unit = Math.min(Math.floor(0.85 * root.offsetHeight / y), Math.floor(0.85 * root.offsetWidth / x));
     root.style.setProperty("--board-height", `${y * unit}px`);
     root.style.setProperty("--board-width", `${x * unit}px`);
     root.style.setProperty("--board-box-length", `${unit}px`);
@@ -133,7 +133,7 @@ function release(row, col) {
     }
 }
 
-function releaseRecursion(i, j, x, y) {
+async function releaseRecursion(i, j, x, y) {
     if (gameState[i][j] < 0 || gameState[i][j] > 8) return;
     countData.total--;
     if (gameState[i][j] != 0) {

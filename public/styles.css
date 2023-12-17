@@ -29,6 +29,7 @@ body {
     position: relative;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: var(--background-color1);
@@ -38,8 +39,20 @@ button {
     cursor: pointer;
 }
 
+header {
+    position: fixed;
+    top: 0px;
+    border-bottom: 2px solid var(--color1);
+    padding: 20px;
+    text-align: center;
+    width: 98%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0.5em 0.3em -0.4em var(--color1);
+}
+
 #inputForm {
-    position: absolute;
     font-size: large;
     display: flex;
     height: 30vh;
@@ -120,11 +133,17 @@ button {
 }
 
 #startButton,
-#restart {
+#restart{
     background-color: var(--background-color1);
     border: 1px solid var(--border-color1);
     border-radius: 10px;
     padding: 10px;
+    font-size: large;
+}
+
+#restart0{
+    background-color: var(--background-color1);
+    border: none;
     font-size: large;
 }
 
@@ -140,12 +159,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 #board {
     position: absolute;
+    top: 80px;
     height: var(--board-height);
     width: var(--board-width);
     background-color: var(--background-color4);
     flex-direction: row;
     flex-wrap: wrap;
     transition: 200ms;
+    border-radius: 5px;
 }
 
 
@@ -157,6 +178,7 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     justify-content: center;
     background-size: cover;
+    border-radius: 5px;
 }
 
 .cover {
@@ -165,7 +187,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .cover:hover {
-    border-width: 2px;
+    border-width: 3px;
 }
 
 #result {

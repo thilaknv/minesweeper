@@ -6,31 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mines</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="images/bomb1.png">
 </head>
 
 <body>
-    <form action="/get" id="inputForm">
-        <div class="inp-div-form">
-            <div class="lab-inp">
-                <label for="yLength">ROW</label>
-                <div class="numInDiv">
-                    <button id="decr2" class="dec-button">&minus;</button>
-                    <input type="number" name="yLength" id="yLength" value="8" min="4" max="20">
-                    <button id="incr2" class="inc-button">&plus;</button>
-                </div>
-            </div>
-            &times;
-            <div class="lab-inp">
-                <label for="xLength">COL</label>
-                <div class="numInDiv">
-                    <button id="decr1" class="dec-button">&minus;</button>
-                    <input type="number" name="xLength" id="xLength" value="8" min="4" max="20">
-                    <button id="incr1" class="inc-button">&plus;</button>
-                </div>
-            </div>
+    <header>
+        <h1>Minesweeper</h1>
+        <div>
+            <button id="restart0">Home</button>
         </div>
-        <button id="startButton">START</button>
-    </form>
+    </header>
+    <div id="home">
+        <form action="/get" id="inputForm">
+            <div class="inp-div-form">
+                <div class="lab-inp">
+                    <label for="yLength">ROW</label>
+                    <div class="numInDiv">
+                        <button id="decr2" class="dec-button">&minus;</button>
+                        <input type="number" name="yLength" id="yLength" value="8" min="4" max="20">
+                        <button id="incr2" class="inc-button">&plus;</button>
+                    </div>
+                </div>
+                &times;
+                <div class="lab-inp">
+                    <label for="xLength">COL</label>
+                    <div class="numInDiv">
+                        <button id="decr1" class="dec-button">&minus;</button>
+                        <input type="number" name="xLength" id="xLength" value="8" min="4" max="20">
+                        <button id="incr1" class="inc-button">&plus;</button>
+                    </div>
+                </div>
+            </div>
+            <button id="startButton">START</button>
+        </form>
+    </div>
+
     <div id="board" class="hide"></div>
     <div id="result" class="hide">
         <span>You Won</span>

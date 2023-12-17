@@ -13,7 +13,8 @@ addEventsToForm();
 //
 function startGame() {
     createBoard();
-    document.querySelector("#inputForm").style.display = 'none';
+    document.querySelector("#home").style.display = 'none';
+    document.querySelector("#restart0").addEventListener('click', () => location.reload());
     document.querySelector("#board").classList.remove('hide');
     document.querySelector("#board").style.display = 'flex';
 }
