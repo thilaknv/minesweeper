@@ -12,7 +12,7 @@ const gameState = [];
 
 function setDimentions(x, y) {
     const root = document.querySelector(":root");
-    const unit = Math.min(Math.floor(0.85 * root.offsetHeight / y), Math.floor(0.85 * root.offsetWidth / x));
+    const unit = Math.min(Math.floor(0.85 * root.offsetHeight / y), Math.floor(0.9 * root.offsetWidth / x));
     root.style.setProperty("--board-height", `${y * unit}px`);
     root.style.setProperty("--board-width", `${x * unit}px`);
     root.style.setProperty("--board-box-length", `${unit}px`);
