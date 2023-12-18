@@ -1,5 +1,9 @@
 import { BOARD } from "../app.js";
 
+const time = {
+    start: null,
+    end: null
+}
 const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const Alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'bomb'];
@@ -115,6 +119,20 @@ function createBoard() {
     addEventsToBoard(x, y);
 }
 
+function timeTaken() {
+    let sec = Math.floor((time.end - time.start) / 1000);
+    let min = Math.floor(sec / 60);
+    if (sec > 0)
+        sec = sec % 60;
+    let hr = Math.floor(min / 60);
+    if (min > 0)
+        min = min % 60;
+    let t = `${sec}sec`;
+    if (min > 0) t = `${min}min ` + t;
+    if (hr > 0) t = `${hr}hr ` + t;
+    return t;
+}
+
 function endGame(result) {
     const span = document.querySelector("#result span");
     span.innerText = `You ${result}`;
@@ -129,7 +147,9 @@ function release(row, col) {
     tempBox.classList.remove('cover');
     gameState[row][col] = -1;
     if (countData.total == countData.bombs) {
-        endGame("Won");
+        time.end = performance.now();
+        document.querySelector("#result h6").innerText = timeTaken();
+        endGame(`Won`);
     }
 }
 
@@ -159,9 +179,11 @@ async function releaseRecursion(i, j, x, y) {
 function addEventsToBoard(x, y) {
     BOARD.addEventListener('click', (event) => {
         const id = event.target.id;
+        if (id.length > 2) return;
         const row = id.charCodeAt(0) - 97;
         const col = id.charCodeAt(1) - 65;
         if (gameState.length == 0) {
+            time.start = performance.now();
             createArray(x, y, row, col);
             calculate(x, y);
             releaseRecursion(row, col, x, y);
