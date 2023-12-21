@@ -134,6 +134,20 @@ function timeTaken() {
     return t;
 }
 
+function timeTaken1() {
+    let sec = Math.floor((time.end - time.start) / 1000);
+    let min = Math.floor(sec / 60);
+    if (sec > 0)
+        sec = sec % 60;
+    let hr = Math.floor(min / 60);
+    if (min > 0)
+        min = min % 60;
+    let t = `${Math.floor(sec / 10)}${sec % 10} `;
+    t = `${Math.floor(min / 10)}${min % 10}:` + t;
+    t = `${Math.floor(hr / 10)}${hr % 10}:` + t;
+    return t;
+}
+
 function endGame(result) {
     clearInterval(time.timeInter);
     const span = document.querySelector("#result span");
@@ -184,7 +198,7 @@ function startTime() {
 
     time.timeInter = setInterval(() => {
         time.end = performance.now();
-        timeP.innerText = timeTaken();
+        timeP.innerText = timeTaken1();
     }, 1000);
 }
 
