@@ -52,6 +52,13 @@ header {
     box-shadow: 0 0.5em 0.3em -0.4em var(--color1);
 }
 
+header div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
 #inputForm {
     font-size: large;
     display: flex;
@@ -133,7 +140,7 @@ header {
 }
 
 #startButton,
-#restart{
+#restart {
     background-color: var(--background-color1);
     border: 1px solid var(--border-color1);
     border-radius: 10px;
@@ -141,7 +148,7 @@ header {
     font-size: large;
 }
 
-#restart0{
+#restart0 {
     background-color: var(--background-color1);
     border: none;
     font-size: large;

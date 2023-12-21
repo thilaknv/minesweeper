@@ -2,7 +2,8 @@ import { BOARD } from "../app.js";
 
 const time = {
     start: null,
-    end: null
+    end: null,
+    timeInter: null
 }
 const alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 const Alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -127,13 +128,14 @@ function timeTaken() {
     let hr = Math.floor(min / 60);
     if (min > 0)
         min = min % 60;
-    let t = `${sec}sec`;
-    if (min > 0) t = `${min}min ` + t;
-    if (hr > 0) t = `${hr}hr ` + t;
+    let t = `${sec} sec`;
+    if (min > 0) t = `${min} min ` + t;
+    if (hr > 0) t = `${hr} hr ` + t;
     return t;
 }
 
 function endGame(result) {
+    clearInterval(time.timeInter);
     const span = document.querySelector("#result span");
     span.innerText = `You ${result}`;
     document.querySelector("#board").style.zIndex = '-1';
@@ -153,7 +155,7 @@ function release(row, col) {
     }
 }
 
-async function releaseRecursion(i, j, x, y) {
+function releaseRecursion(i, j, x, y) {
     if (gameState[i][j] < 0 || gameState[i][j] > 8) return;
     countData.total--;
     if (gameState[i][j] != 0) {
@@ -176,6 +178,16 @@ async function releaseRecursion(i, j, x, y) {
     if (j < x - 1) releaseRecursion(i, j + 1, x, y);
 }
 
+function startTime() {
+    const timeP = document.querySelector("#time");
+    timeP.style.display = 'block';
+
+    time.timeInter = setInterval(() => {
+        time.end = performance.now();
+        timeP.innerText = timeTaken();
+    }, 1000);
+}
+
 function addEventsToBoard(x, y) {
     BOARD.addEventListener('click', (event) => {
         const id = event.target.id;
@@ -187,6 +199,7 @@ function addEventsToBoard(x, y) {
             createArray(x, y, row, col);
             calculate(x, y);
             releaseRecursion(row, col, x, y);
+            startTime();
             return;
         }
 
